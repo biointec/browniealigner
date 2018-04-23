@@ -1,8 +1,3 @@
-# Brownie
-To download manual:
+To download the manual go to this page:
 
-https://github.com/jfostier/brownie/wiki
-
-To download paper :
-
-coming soon ...
+https://github.com/biointec/browniealigner/wiki
