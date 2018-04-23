@@ -1,0 +1,16 @@
+#/bin/sh!
+version=0.1
+cd ..
+mkdir brownie-"$version"
+cd brownie-"$version"
+# cp ../README .
+# cp ../INSTALL .
+cp ../CMakeLists.txt .
+find ../src | grep -v '/\.' | grep -v [~] | cpio -dump src
+find ../unittest | grep -v '/\.' | grep -v [~] | cpio -dump unittest
+find ../cmake | grep -v '/\.' | grep -v [~] | cpio -dump cmake
+cd ..
+tar -czf brownie-"$version".tar.gz brownie-"$version"
+rm -r -f brownie-"$version"
+echo "Done!"
+

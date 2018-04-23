@@ -1,3 +1,8 @@
+# Brownie
+To download manual:
 
+https://github.com/jfostier/brownie/wiki
 
-Alignment algorithm for short Illumina reads to a de Bruijn graph
+To download paper :
+
+coming soon ...
