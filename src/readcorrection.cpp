@@ -691,8 +691,8 @@ void ReadCorrection::correctReadFirstAttempt(ReadRecord& record,
         
         // if the read is too short, get out
         if (read.length() < Kmer::getK()){
-                record.alignmentInfo  = alignmentInfo+ "\tA(0)A\tS(0)S\tB(0)B\tP(0,0)\tC(0)C";
-                record.preRead.insert(record.preRead.length()-1,"\tA(0)A\tS(0)S\tB(0)B\tP(0,0)\tC(0)C");
+                record.alignmentInfo  = alignmentInfo+ "\tA(0)A\tS(0)S\tB(0)B\tP(0,0)P\tC(0)C";
+                record.preRead.insert(record.preRead.length()-1,"\tA(0)A\tS(0)S\tB(0)B\tP(0,0)P\tC(0)C");
                 return;
         }
         
@@ -772,7 +772,7 @@ string ReadCorrection::makeAlignmentInfo(bool branch, int bestScore, vector<Node
         
         //save the original read beside the corrected one, later in refinement we need to correct it again.
         string insertedStr  = "S("+to_string( bestScore)+")S\tB("+ branchStr +")B";
-        insertedStr = insertedStr+ "\tP(" +to_string( nodePos.first) + "," +to_string( nodePos.second) + ")";
+        insertedStr = insertedStr+ "\tP(" +to_string( nodePos.first) + "," +to_string( nodePos.second) + ")P";
 
         string nodeCahinStr = "\tC(";
         if (bestNodeChain.empty())
