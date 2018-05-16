@@ -141,6 +141,9 @@ void Brownie::stageThree()
         //MarkovChainHandler mch(graph,settings);
         //mch.loadFromFile();
         //mch.verifyChains(settings.getTempDirectory()+ "/perfectReads.ncf");
+        graph.writeGraph(getNodeFilename(3),
+                        getArcFilename(3),
+                        getMetaDataFilename(3));
         cout << "Read alignment completed in " << Util::stopChronoStr() << endl;
         cout << "Stage 3 finished\n" << endl;
         graph.clear();
