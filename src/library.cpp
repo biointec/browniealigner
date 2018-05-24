@@ -619,8 +619,10 @@ void LibraryContainer::joinIOThreads()
 {
         iThread.join();
 
-        if (oThread.joinable())         // output thread might not be active
+        if (oThread.joinable())  {       // output thread might not be active
+                outputReady.notify_one();
                 oThread.join();
+        }
 
         assert(inputBlocks.size() == NUM_RECORD_BLOCKS);
         // delete blocks and clear the input stack
