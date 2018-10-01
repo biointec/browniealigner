@@ -222,7 +222,7 @@ private:
         GraphAligner graphaln;
         bool markov_filter;
         bool branchAndBound;
-        
+        bool useEssaMem;
 
         /**
          * Get the marginal length of a string
@@ -347,6 +347,9 @@ private:
 
         void findSeedKmer(const std::string& read,
                           std::vector<Seed>& seeds);
+        const bool getUseEssaMEM() const{
+                return useEssaMem;
+        }
 
 public:
         /**
@@ -357,7 +360,7 @@ public:
         ReadCorrection(const DBGraph& dbg_, const Settings& settings_,
                           const sparseSA& sa_, const std::vector<long>& startpos_ , MarkovChainHandler & mch_, bool markov_filter_, bool branchAndBound_) :
                           dbg(dbg_), settings(settings_),
-                          alignment(2, 1, -1, -3), sa(sa_), startpos(startpos_), mch(mch_) , graphaln(dbg_, mch_,settings.getReadCorrDFSNodeLimit()), markov_filter(markov_filter_), branchAndBound(branchAndBound_){}
+                          alignment(2, 1, -1, -3), sa(sa_), startpos(startpos_), mch(mch_) , graphaln(dbg_, mch_,settings.getReadCorrDFSNodeLimit()), markov_filter(markov_filter_), branchAndBound(branchAndBound_), useEssaMem (settings.getEssaMEM()){}
 
         /**
          * Correct the records in one chunk
@@ -387,6 +390,7 @@ private:
         MarkovChainHandler mch;
         bool markov_filter;
         bool branchAndBound;
+        bool useEssaMem;
         void initEssaMEM();
         /**
          * Entry routine for worker thread
@@ -412,6 +416,9 @@ private:
          * @param umCorrReads number of corrected reads
          **/
         void  loadMetrics(size_t &tootalNumOfReads, size_t &numOfSub, size_t &numCorrectedByMEM ,size_t & umCorrReads );
+         const bool getUseEssaMEM() const{
+                return useEssaMem;
+        }
 public:
         /**
          * Default constructor
@@ -434,7 +441,7 @@ public:
          **/
         void doReadRefinement(LibraryContainer& libraries);
 
-     
+       
 };
 
 

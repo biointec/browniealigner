@@ -660,6 +660,8 @@ SearchRes ReadCorrection::correctRead(const string &read, string &bestCorrectedR
         bool branchLocal = false;
         SearchRes CorrectionStatus = correctRead(read, bestCorrectedRead, seeds, bestScore, bestNodeChain, branchLocal, nodePos);
         branch = branchLocal;
+        if (!getUseEssaMEM())
+                return CorrectionStatus;
         if (seeds.empty() || (bestScore <= minSim && CorrectionStatus != EXHAUSTED) ) {
                 findSeedMEM(read, seeds);
                 bestNodeChain.clear();
@@ -978,18 +980,19 @@ void ReadCorrectionHandler::doErrorCorrection(LibraryContainer& libraries)
 }
 
 ReadCorrectionHandler::ReadCorrectionHandler(DBGraph& g, const Settings& s,bool markov_filter_) :
-        dbg(g), settings(s), sa(NULL),mch(dbg,settings), markov_filter(markov_filter_), branchAndBound(settings.getBranchAndBound())
+dbg(g), settings(s), sa(NULL),mch(dbg,settings), markov_filter(markov_filter_), branchAndBound(settings.getBranchAndBound()), useEssaMem(settings.getEssaMEM())
 {
         Util::startChrono();
         cout << "Creating kmer lookup table... "; cout.flush();
         dbg.buildKmerNPPTable();
         cout << "done (" << Util::stopChronoStr() << ")" << endl;
-
-        Util::startChrono();
-        cout << "Building suffix array (sparseness factor: "
-             << settings.getEssaMEMSparsenessFactor() << ")..."; cout.flush();
-        initEssaMEM();
-        cout << "done (" << Util::stopChronoStr() << ")" << endl;
+        if (getUseEssaMEM()){
+                Util::startChrono();
+                cout << "Building suffix array (sparseness factor: "
+                << settings.getEssaMEMSparsenessFactor() << ")..."; cout.flush();
+                initEssaMEM();
+                cout << "done (" << Util::stopChronoStr() << ")" << endl;
+        }
 }
 
 void ReadCorrectionHandler::workerThreadRefine(size_t myID, LibraryContainer& libraries,
@@ -1097,6 +1100,7 @@ void ReadCorrectionHandler::doReadRefinement(LibraryContainer& libraries)
 }
 ReadCorrectionHandler::~ReadCorrectionHandler()
 {
-        delete sa;
+        if (getUseEssaMEM())
+                delete sa;
         dbg.destroyKmerNPPTable();
 }

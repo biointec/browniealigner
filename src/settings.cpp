@@ -171,13 +171,13 @@ Settings::Settings() :  kmerSize(31),command(Command::none),
         numThreads(std::thread::hardware_concurrency()), doubleStranded(true),
         runSpecificStage(0),
         essaMEMSparsenessFactor(1), bubbleDFSNodeLimit(1000),
-        readCorrDFSNodeLimit(5000), covCutoff(0), abundanceMin(2) , branchAndBound(true), MarkovFilter(true)  {}
+        readCorrDFSNodeLimit(5000), covCutoff(0), abundanceMin(2) , branchAndBound(true), MarkovFilter(true), essaMEM(true)  {}
  
 Settings::Settings(unsigned int kmerSize,std::string pathtotemp) : kmerSize(kmerSize),pathtotemp(pathtotemp),command(Command::none),
         numThreads(std::thread::hardware_concurrency()), doubleStranded(true),
         runSpecificStage(0),
         essaMEMSparsenessFactor(1), bubbleDFSNodeLimit(1000),
-        readCorrDFSNodeLimit(5000), covCutoff(0), abundanceMin(2) ,  branchAndBound(true), MarkovFilter(true)  {}
+        readCorrDFSNodeLimit(5000), covCutoff(0), abundanceMin(2) ,  branchAndBound(true), MarkovFilter(true), essaMEM(true)   {}
 void Settings::parseCommandLineArguments(int argc, char** args,
                                          LibraryContainer& libCont)
 {
@@ -190,7 +190,7 @@ void Settings::parseCommandLineArguments(int argc, char** args,
                 } else if ((arg == "-v") || (arg == "--version")) {
                         printProgramVersion();
                         exit(EXIT_SUCCESS);
-                } else if (arg == "assemble" or arg == "index" or arg == "align") {
+                } else if (arg == "assemble" || arg == "index" || arg == "align") {
                         command = Command::assemble;
                         parseCommandLineArgAssemble(argc, args, libCont);
                 } 
@@ -226,6 +226,9 @@ void Settings::parseCommandLineArgAssemble(int argc, char** args,
                         branchAndBound = false;
                 } else if ((arg == "-nMM") || (arg == "--noMarkovModel"))  {
                         MarkovFilter = false;
+                } 
+                else if ((arg == "-nMEM") || (arg == "--noEssaMEM"))  {
+                        essaMEM = false;
                 } 
                 else if ((arg == "-k") || (arg == "--kmersize")) {
                         i++;

@@ -90,6 +90,7 @@ private:
         size_t abundanceMin;            // a kmer should occure this many time to be used in th graph construction. only 1 and 2 are possible
         bool branchAndBound;            // use branch and bound in dfs algorithm.
         bool MarkovFilter;              // align reads in two steps based on the Markov Model
+        bool essaMEM;
 public:
         /**
          * Default constructor
@@ -268,7 +269,9 @@ public:
         bool getMarkovFilter () const{
                 return MarkovFilter;
         }
-        
+        bool getEssaMEM()const {
+                return essaMEM;
+        }
 };
 
 #endif
