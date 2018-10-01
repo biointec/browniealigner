@@ -1,4 +1,4 @@
-﻿
+
 
 # Short description:
 
@@ -63,9 +63,8 @@ options:
     -e      --essa                sparseness factor of index structure [default = 1]
     -nBB    --noBranchAndBound    do not use branch&Bound pruning
     -nMM    --noMarkovModel       do not use Markov Model
-    -nMEM   --noEssaMEM           do not use EssaMEM
 
-Using -nBB is not recommended. However, with -nMM browniealigner runs almost twice faster with a little drop in the accuracy. Using -nMEM also not recommended because it reduces the accuracy especially if your kmer size is large.  However, by this command browniealigner can run faster with less memory. 
+Using -nBB is not recommended. However, with -nMM browniealigner runs almost twice faster with a little drop in the accuracy.
 
      file_options:
 
