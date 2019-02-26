@@ -88,7 +88,11 @@ typedef uint32_t Coverage;       // coverage of an arc
 typedef uint8_t Multiplicity;   // multiplicity of a node, arc, etc
 typedef int32_t ReadID; // max 2 billion reads
 typedef float Time;    // time, as defined by D.Z.
+#ifdef __MACH__
+typedef __darwin_ssize_t ssize_t;
+#else
 typedef int64_t ssize_t;
+#endif
 typedef int32_t sPositionID;
 
 template<size_t numBytes>
